@@ -1,13 +1,65 @@
 import PetList from "./PetList";
 import "./Employee.css";
+import { useState,useEffect } from "react";
 
-export const Employee = () => {
+export const Employee = ({employee}) => {
+  const API = "https://vet-app-0obi.onrender.com/api"
+  const [clickedEmployee, setClickedEmployee] = useState("")
+  const [togglePet, setTogglePet] = useState(false)
+
+  const showPets = (e)=>{
+    setTogglePet(!togglePet)
+  }
+
+  useEffect(()=>{
+    showPets()
+  },[])
+ 
+  const [ pets, setPets ] = useState([])
+  
+  function getPets(){
+    fetch(`${API}/pets`)
+    .then((response)=> response.json())
+    .then((petsData)=>{
+      // console.log(data)
+      setPets(petsData)
+    })
+    .catch((error) =>{
+      console.log(error, "Error getting pets!")
+    })
+  }
+
+  useEffect(()=>{
+    getPets()
+  },[])
+
+  console.log("initial pets:",pets)
+
+
+  const {id, firstName, lastName, prefix, postfix, title} = employee
+
+  console.log("Employee: ==> ", employee)
   return (
     <article className="employee">
-      <h3>Staff Member Name</h3>
-      <h4>Staff Member Title</h4>
-      <button>Show Pets</button>
-      <PetList />
+      <h3>{prefix ? prefix : ""} {firstName} {lastName} {postfix ? postfix : ""}</h3>
+      <h4>{title}</h4>
+      <button onClick={showPets}>Show Pets</button>
+      {pets.map((pet)=>{
+        if(pet.employeeId===id){
+
+          return (
+            togglePet ? (
+              <>
+                <PetList key={pet.id} pet={pet}/>
+              </>
+
+            )
+            :
+            ("")
+          )
+        }
+
+      })}
     </article>
   );
 };

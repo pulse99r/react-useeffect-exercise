@@ -1,7 +1,10 @@
-export const PetList = () => {
+import { useState,useEffect } from "react";
+
+export const PetList = ({pet}) => {
+    const {name, kind, breed, } = pet
     return (
       <aside className="pets-list">
-        <p>No pets listed for this employee.</p>
+        <p>{name}, {kind}, {breed}</p>
       </aside>
     );
   };
