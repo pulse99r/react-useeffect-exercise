@@ -4,10 +4,10 @@ import { useState,useEffect } from "react";
 
 export const Employee = ({employee}) => {
   const API = "https://vet-app-0obi.onrender.com/api"
-  const [clickedEmployee, setClickedEmployee] = useState("")
   const [togglePet, setTogglePet] = useState(false)
+  const [ pets, setPets ] = useState([])
 
-  const showPets = (e)=>{
+  const showPets = ()=>{
     setTogglePet(!togglePet)
   }
 
@@ -15,7 +15,6 @@ export const Employee = ({employee}) => {
     showPets()
   },[])
  
-  const [ pets, setPets ] = useState([])
   
   function getPets(){
     fetch(`${API}/pets`)
