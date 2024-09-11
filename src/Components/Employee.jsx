@@ -48,13 +48,15 @@ export const Employee = ({employee}) => {
 
           return (
             togglePet ? (
-              <>
-                <PetList key={pet.id} pet={pet}/>
-              </>
+              ""
 
             )
             :
-            ("")
+            (
+              <>
+                <PetList key={pet.id} pet={pet}/>
+              </>
+            )
           )
         }
 
